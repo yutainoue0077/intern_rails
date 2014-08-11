@@ -10,12 +10,17 @@ describe "StaticPages" do
 
     it "/home には 'ほーむ' という言葉が含まれる" do
       v_home
-      expect(page).to have_content('ほーむ')
+      expect(page).to have_content('Sample')
     end
 
     it "/home は以下のtitleを保有する" do
       v_home
-      expect(page).to have_title("#{base_title}ほーむ")
+      expect(page).to have_title("Sample App")
+    end
+
+    it "should not have a custom page title" do
+      v_home
+      expect(page).not_to have_title('ほーむ')
     end
 
     it "/help には 'へるぷ' という言葉が含まれる" do

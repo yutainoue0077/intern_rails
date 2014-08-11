@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sample App | <%= yield(:title)%></title>
+  <title><%= full_title(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -9,6 +9,15 @@
 <body>
 
 <%= yield %>
-
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>StaticPages#<%= yield(:title)%></h1>
+    <p>
+    ここは<%= full_title(yield(:title)) %>です。
+    <a href="http://railstutorial.jp/">Ruby on Rails Tutorial</a>
+    </p>
+  </body>
+</html>
 </body>
 </html>
