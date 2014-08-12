@@ -1,56 +1,31 @@
 require 'spec_helper'
-
 describe "StaticPages" do
     let(:base_title) { "Sample App | " }
-    let(:v_home) {visit '/static_pages/home'}
-    let(:v_help) {visit '/static_pages/help'}
-    let(:v_about) {visit '/static_pages/about'}
-    let(:v_contact) {visit '/static_pages/contact'}
+    subject{ page }
+
   describe "Home page" do
+    before { visit root_path }
 
-    it "/home には 'ほーむ' という言葉が含まれる" do
-      v_home
-      expect(page).to have_content('Sample')
-    end
+    it { should have_content('Sample') }
+    it { should have_title(full_title('')) }
+    it { should_not have_title('ほーむ') }
+  end
 
-    it "/home は以下のtitleを保有する" do
-      v_home
-      expect(page).to have_title("Sample App")
-    end
+  describe "Help page" do
+    before { visit help_path }
+    it { should have_content('へるぷ') }
+    it { should have_title(full_title('へるぷ')) }
+  end
 
-    it "should not have a custom page title" do
-      v_home
-      expect(page).not_to have_title('ほーむ')
-    end
+  describe "About page" do
+    before { visit about_path }
+    it { should have_content('あばうと') }
+    it { should have_title(full_title('あばうと')) }
+  end
 
-    it "/help には 'へるぷ' という言葉が含まれる" do
-      v_help
-      expect(page).to have_content('へるぷ')
-    end
-
-    it "/help は以下のtitleを保有する" do
-      v_help
-      expect(page).to have_title("#{base_title}へるぷ")
-    end
-
-    it "/about には 'あばうと' という言葉が含まれる" do
-      v_about
-      expect(page).to have_content('あばうと')
-    end
-
-    it "/about は以下のtitleを保有する" do
-      v_about
-      expect(page).to have_title("#{base_title}あばうと")
-    end
-
-    it "/contact には 'こんたくと' という言葉が含まれる" do
-      v_contact
-      expect(page).to have_content('こんたくと')
-    end
-
-    it "/contact は以下のtitleを保有する" do
-      v_contact
-      expect(page).to have_title("Sample App | こんたくと")
-    end
+  describe "Contact page" do
+    before { visit contact_path }
+    it { should have_content('こんたくと') }
+    it { should have_title(full_title('こんたくと')) }
   end
 end
