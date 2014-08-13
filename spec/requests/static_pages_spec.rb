@@ -4,8 +4,9 @@ describe "StaticPages" do
     subject{ page }
 
   shared_examples_for "all static pages" do
-    it { should have_content(name) }
+    it { should have_content(title) }
     it { should have_title(full_title(title)) }
+    #have_title(full_title(title))
   end
 
   describe "Home page" do

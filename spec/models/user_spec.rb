@@ -55,12 +55,13 @@ describe User do
   end
 
     describe "when email address is already taken" do
-    before do
+    before {
+      #@userと同一の属性をuser_with_same_emailコピー
       user_with_same_email = @user.dup
+      #メールアドレスでは大文字小文字が区別されないため、upcaseで統一。
       user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
-    end
-
+    }
     it { should_not be_valid }
   end
 
@@ -79,7 +80,7 @@ describe User do
 
     describe "with a password that's too short" do
     before { @user.password = @user.password_confirmation = "a" * 5 }
-    it { should be_invalid }
+    it { should_not be_valid }
   end
 
   describe "return value of authenticate method" do
@@ -89,12 +90,11 @@ describe User do
     describe "with valid password" do
       it { should eq found_user.authenticate(@user.password) }
     end
-
     describe "with invalid password" do
       let(:user_for_invalid_password) { found_user.authenticate("invalid") }
 
       it { should_not eq user_for_invalid_password }
-      specify { expect(user_for_invalid_password).to be_false }
+      it { expect(user_for_invalid_password).to be_false }
     end
   end
 end

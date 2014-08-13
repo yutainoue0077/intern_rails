@@ -21,7 +21,6 @@ group :test do
   gem "faker", "~> 1.1.2"
   gem "database_cleaner", "~> 1.0.1"
   gem "launchy", "~> 2.3.0"
-
 end
 
 gem 'sass-rails', '4.0.2'
