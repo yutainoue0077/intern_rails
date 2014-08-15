@@ -10,10 +10,12 @@ $grayMediumLight: #eaeaea;
 }
 html {
   overflow-y: scroll;
+
 }
 
 body {
   padding-top: 60px;
+  background-image: url('http://www.unsigneddesign.com/Seamless%20Paper%20Textures/seamlesspaper1.jpg');
 }
 
 section {
@@ -155,6 +157,7 @@ aside {
 .span6 {
   border: 7px double #bbb;
   padding: 20px;
+  background-color: #eeeeee;
 }
 
 input, textarea, select, .uneditable-input {

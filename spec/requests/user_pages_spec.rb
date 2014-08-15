@@ -113,7 +113,8 @@ describe "UserPages" do
       end
       let(:user) { User.find_by(email: 'user@example.com') }
 
-      it { should have_title("Sample App | #{user.name}") }
+      it { should have_link('Sign out') }
+      it { should have_title(user.name) }
       it { should have_selector('div.alert.alert-success', text: '入力お疲れさまです。無事に登録されました。') }
 
       describe "reload show page" do
