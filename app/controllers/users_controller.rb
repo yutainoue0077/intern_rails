@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :signed_in_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -26,7 +27,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      # 更新に成功した場合を扱う。
+      flash[:success] = "更新が完了しました。"
+      redirect_to @user
     else
       render 'edit'
     end
@@ -41,4 +43,7 @@ class UsersController < ApplicationController
                                     :password_confirmation)
     end
 
+    def signed_in_user
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
 end
