@@ -37,14 +37,13 @@ describe "UserPages" do
           sign_in admin
           visit users_path
         end
-
         it { should have_link('delete', href: user_path(User.first)) }
+        it { should_not have_link('delete', href: user_path(admin)) }
         it "should be able to delete another user" do
           expect do
             click_link('delete', match: :first)
           end.to change(User, :count).by(-1)
         end
-        it { should_not have_link('delete', href: user_path(admin)) }
       end
     end
   end
@@ -166,37 +165,44 @@ describe "UserPages" do
         before{ visit "/users/#{user.id}" }
         it { should_not have_selector('div.alert.alert-success', text: '入力お疲れさまです。無事に登録されました。') }
       end
+
+      describe "visit signup page" do
+        before{ visit "/signup" }
+        it { should_not have_title('Sign up') }
+        it { should have_link('Sign up now!') }
+      end
+
     end
   end
 
     describe "edit" do
-    let(:user) { FactoryGirl.create(:user) }
-    before do
-      sign_in user
-      visit edit_user_path(user)
-    end
-
-    describe "page" do
-      it { should have_content("Update your profile") }
-      it { should have_title("Edit user") }
-      it { should have_link('change', href: 'http://gravatar.com/emails') }
-    end
-
-    describe "with invalid information" do
-      before { click_button "Save changes" }
-
-      it { should have_content('error') }
-    end
-        describe "with valid information" do
-      let(:new_name)  { "New Name" }
-      let(:new_email) { "new@example.com" }
+      let(:user) { FactoryGirl.create(:user) }
       before do
-        fill_in "Name",             with: new_name
-        fill_in "Email",            with: new_email
-        fill_in "Password",         with: user.password
-        fill_in "Confirm Password", with: user.password
-        click_button "Save changes"
+        sign_in user
+        visit edit_user_path(user)
       end
+
+      describe "edit page" do
+        it { should have_content("Update your profile") }
+        it { should have_title("Edit user") }
+        it { should have_link('change', href: 'http://gravatar.com/emails') }
+      end
+
+      describe "with invalid information" do
+        before { click_button "Save changes" }
+
+        it { should have_content('error') }
+      end
+      describe "with valid information" do
+        let(:new_name)  { "New Name" }
+        let(:new_email) { "new@example.com" }
+        before do
+          fill_in "Name",             with: new_name
+          fill_in "Email",            with: new_email
+          fill_in "Password",         with: user.password
+          fill_in "Confirmation", with: user.password
+          click_button "Save changes"
+        end
 
       it { should have_title(new_name) }
       it { should have_selector('div.alert.alert-success') }
@@ -204,5 +210,19 @@ describe "UserPages" do
       it { expect(user.reload.name).to  eq new_name }
       it { expect(user.reload.email).to eq new_email }
     end
+  end
+
+  describe "forbidden attributes" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:params) do
+      { user: { admin: true,
+                password: user.password,
+                password_confirmation: user.password } }
+    end
+    before do
+      sign_in user, no_capybara: true
+      patch user_path(user), params
+    end
+    specify { expect(user.reload).not_to be_admin }
   end
 end
