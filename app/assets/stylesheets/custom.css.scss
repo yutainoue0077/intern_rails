@@ -54,6 +54,9 @@ h2 {
   font-weight: normal;
   color: $grayLight;
 }
+.show_h2 {
+  color: $red;
+}
 
 p {
   font-size: 1.1em;
@@ -197,5 +200,38 @@ input {
     &:last-child {
       border-bottom: 1px solid $grayLighter;
     }
+  }
+}
+
+/* microposts */
+
+.microposts {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid $black;
+  }
+}
+.microposts_title {
+  font-size: 2.3em;
+}
+.content {
+  display: block;
+  font-size: 1.5em;
+}
+.timestamp {
+  color: $red;
+
+}
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
   }
 }
