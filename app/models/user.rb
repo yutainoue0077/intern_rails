@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     before_save { email.downcase! }
 
     before_create (:create_remember_token)
-    validates(:name, presence: true, length: {maximum:15})
+    validates(:name, presence: true, length: {maximum:30})
     validates(:email, presence: true, format: { with: VALID_EMAIL_REGEX },
                uniqueness:{ case_sensitive: false })
     validates(:password, length: {minimum: 6})
