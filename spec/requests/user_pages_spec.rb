@@ -178,7 +178,7 @@ describe "UserPages" do
       describe "visit signup page" do
         before{ visit "/signup" }
         it { should_not have_title('Sign up') }
-        it { should have_link('Sign up now!') }
+        it { should have_content('hogehoge') }
       end
 
     end
