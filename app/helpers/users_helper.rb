@@ -1,6 +1,13 @@
 module UsersHelper
   # 与えられたユーザーのGravatar (http://gravatar.com/) を返す。
-  def gravatar_for(user, options = { size: 200 })
+  def gravatar_for(user, options = { size: 250 })
+    gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
+    size = options[:size]
+    gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
+    image_tag(gravatar_url, alt: user.name, class: "gravatar")
+  end
+
+  def gravatar_for_feed(user, options = { size: 50 })
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
     size = options[:size]
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
